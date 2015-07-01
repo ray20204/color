@@ -16,6 +16,9 @@ var CommentForm = React.createClass({
                 <form className="commentForm" onSubmit={this.handleSubmit}>
                 <input type="text" placeholder="search name" ref="text" />
                 <input type="submit" className="btn btn-sm btn-primary" value="search" />
+                <label className="pull-right">資料來源:
+                <a href="http://www.gov.taipei/ct.asp?xItem=108880666&ctNode=38161&mp=100001">台北市資訊局</a>
+                </label>
                 </form>
             );
         }
@@ -51,7 +54,7 @@ var CommentForm = React.createClass({
     render: function() {
         return (
             <div className="commentBox">
-            <h1>八仙樂園粉塵爆炸事故即時資訊</h1>
+            <h1>八仙樂園塵爆資訊</h1>
             <CommentForm onCommentSubmit={this.handleCommentSubmit} />
             <CommentList data={this.state.data} />
             </div>
