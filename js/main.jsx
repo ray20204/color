@@ -31,9 +31,10 @@ var CommentForm = React.createClass({
         this.loadCommentsFromServer();
     },
     handleCommentSubmit: function(comment) {
-        console.log(originData);
         var result = $.grep(originData, function(el, ind) {
-            return el.姓名.match(comment.text);
+            var taskPosition = el.姓名.indexOf("○");
+            var compareName = el.姓名.replace("○", comment.text[taskPosition]);
+            return compareName.match(comment.text);
         });
         this.setState({data: result});
     },
