@@ -7,23 +7,24 @@ var CommentForm = React.createClass({
         //if (!text || !author) {
             //return;
             //}
-            this.props.onCommentSubmit({text: text});
-            //React.findDOMNode(this.refs.author).value = '';
-            //React.findDOMNode(this.refs.text).value = '';
-        },
-        render: function() {
-            return (
-                <form className="commentForm" onSubmit={this.handleSubmit}>
-                <input type="text" placeholder="search name" ref="text" />
-                <input type="submit" className="btn btn-sm btn-primary" value="search" />
-                <label className="pull-right">資料來源:
-                <a href="http://www.gov.taipei/ct.asp?xItem=108880666&ctNode=38161&mp=100001">台北市資訊局</a>
-                </label>
-                </form>
-            );
-        }
-    });
-    var CommentBox = React.createClass({
+        this.props.onCommentSubmit({text: text});
+        //React.findDOMNode(this.refs.author).value = '';
+        //React.findDOMNode(this.refs.text).value = '';
+    },
+    render: function() {
+        return (
+            <form className="commentForm" onSubmit={this.handleSubmit}>
+            <input type="text" placeholder="search name" ref="text" />
+            <input type="submit" className="btn btn-sm btn-primary" value="search" />
+            <label className="pull-right">資料來源:
+            <a href="http://www.gov.taipei/ct.asp?xItem=108880666&ctNode=38161&mp=100001">台北市資訊局</a>
+            </label>
+            </form>
+        );
+    }
+});
+
+var CommentBox = React.createClass({
         getInitialState: function() {
         return {data: []};
     },
@@ -63,11 +64,13 @@ var CommentForm = React.createClass({
     }
 });
 var test;
+var trInfoClass;
 var CommentList = React.createClass({
     render: function() {
         var commentNodes = this.props.data.map(function(comment, index) {
+            trInfoClass = {'加護病房': 'listitem danger', '死亡': 'listitem danger', '出院': 'listitem success'};
             return (
-                <tr key={index} className="listitem">
+                <tr key={index} className={trInfoClass[comment.即時動向]}>
                     <td>{comment.編號}</td>
                     <td>{comment.姓名}</td>
                     <td>{comment.性別}</td>
