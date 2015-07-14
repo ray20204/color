@@ -65,6 +65,18 @@ var CommentList = React.createClass({
                     state = true;
                     return;
                 }
+            } else {
+                if (typeof(value) != "string") {
+                    if (value === filter) {
+                        state = true;
+                        return;
+                    }
+                } else {
+                    if (value.match(filter) != null) {
+                        state = true;
+                        return;
+                    }
+                }
             }
         });
         return state;
