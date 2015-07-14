@@ -20,18 +20,13 @@ var CommentForm = React.createClass({
 
 var CommentBox = React.createClass({
     getInitialState: function() {
-        return {data: []};
+        return {data: [], filter: ''};
     },
     componentDidMount: function() {
         this.loadCommentsFromServer();
     },
     handleCommentSubmit: function(comment) {
-        var result = $.grep(originData, function(el, ind) {
-            var taskPosition = el.姓名.indexOf("○");
-            var compareName = el.姓名.replace("○", comment.text[taskPosition]);
-            return compareName.match(comment.text);
-        });
-        this.setState({data: result});
+        this.setState({filter: comment.text});
     },
     loadCommentsFromServer: function() {
         $.ajax({
@@ -52,7 +47,7 @@ var CommentBox = React.createClass({
             <div className="commentBox">
             <h1>八仙樂園塵爆資訊</h1>
             <CommentForm onCommentSubmit={this.handleCommentSubmit} />
-            <CommentList data={this.state.data} />
+            <CommentList data={this.state.data} filter={this.state.filter}/>
             </div>
         );
     }
@@ -60,10 +55,32 @@ var CommentBox = React.createClass({
 var test;
 var trInfoClass;
 var CommentList = React.createClass({
+    filterData: function(data, filter) {
+        var state = false;
+        $.each(data, function(index, value) {
+            if ('姓名' === index) {
+                var taskPosition = value.indexOf("○");
+                var compareName = value.replace("○", filter[taskPosition]);
+                if (compareName.match(filter) != null) {
+                    state = true;
+                    return;
+                }
+            }
+        });
+        return state;
+    },
     render: function() {
+        var filter = this.props.filter;
         var commentNodes = [];
+        var filterData = this.filterData;
         this.props.data.forEach(function(comment, index) {
-            commentNodes.push(<CommentItem item={comment} />);
+            if (filter !== '') {
+                if (filterData(comment, filter) != false) {
+                    commentNodes.push(<CommentItem item={comment} filter={filter}/>);
+                }
+            } else {
+                commentNodes.push(<CommentItem item={comment} filter={filter}/>);
+            }
         });
         test = commentNodes;
         return (
@@ -99,9 +116,6 @@ var CommentItem = React.createClass({
     render: function() {
         var comment = this.props.item;
         this.setColorTag(comment.即時動向);
-        $.each(this.props.item, function(index, value) {
-            //dofilter
-        });
         return (
             <tr className={this.colortag}>
                 <td>{comment.編號}</td>
