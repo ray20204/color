@@ -8,7 +8,7 @@ var CommentForm = React.createClass({
     render: function() {
         return (
             <form className="commentForm" onSubmit={this.handleSubmit}>
-            <input type="text" placeholder="search name" ref="text" />
+            <input type="text" placeholder="search data" ref="text" />
             <input type="submit" className="btn btn-sm btn-primary" value="search" />
             <label className="pull-right">資料來源:
             <a href="http://www.gov.taipei/ct.asp?xItem=108880666&ctNode=38161&mp=100001">台北市資訊局</a>
