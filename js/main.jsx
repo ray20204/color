@@ -88,10 +88,10 @@ var CommentList = React.createClass({
         this.props.data.forEach(function(comment, index) {
             if (filter !== '') {
                 if (filterData(comment, filter) != false) {
-                    commentNodes.push(<CommentItem item={comment} filter={filter}/>);
+                    commentNodes.push(<CommentItem item={comment}/>);
                 }
             } else {
-                commentNodes.push(<CommentItem item={comment} filter={filter}/>);
+                commentNodes.push(<CommentItem item={comment}/>);
             }
         });
         test = commentNodes;
