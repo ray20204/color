@@ -55,6 +55,10 @@ var CommentBox = React.createClass({
 var test;
 var trInfoClass;
 var CommentList = React.createClass({
+    handleClick: function(id) {
+        var filter = this.props.filter = id;
+        this.forceUpdate();
+    },
     filterData: function(data, filter) {
         var state = false;
         $.each(data, function(index, value) {
@@ -85,13 +89,14 @@ var CommentList = React.createClass({
         var filter = this.props.filter;
         var commentNodes = [];
         var filterData = this.filterData;
+        var handleclick = this.handleClick;
         this.props.data.forEach(function(comment, index) {
             if (filter !== '') {
                 if (filterData(comment, filter) != false) {
-                    commentNodes.push(<CommentItem item={comment}/>);
+                    commentNodes.push(<CommentItem item={comment} rowClick={handleclick}/>);
                 }
             } else {
-                commentNodes.push(<CommentItem item={comment}/>);
+                commentNodes.push(<CommentItem item={comment} rowClick={handleclick}/>);
             }
         });
         test = commentNodes;
@@ -120,6 +125,10 @@ var CommentList = React.createClass({
     }
 });
 var CommentItem = React.createClass({
+    handleClick: function() {
+        var id = this.props.item.編號;
+        this.props.rowClick(id);
+    },
     colortag: '',
     setColorTag: function(state) {
         var trInfoClass = {'加護病房': 'listitem danger', '死亡': 'listitem danger', '出院': 'listitem success'};
@@ -129,7 +138,7 @@ var CommentItem = React.createClass({
         var comment = this.props.item;
         this.setColorTag(comment.即時動向);
         return (
-            <tr className={this.colortag}>
+            <tr className={this.colortag} onClick={this.handleClick}>
                 <td>{comment.編號}</td>
                 <td>{comment.姓名}</td>
                 <td>{comment.性別}</td>
