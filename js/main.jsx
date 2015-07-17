@@ -5,11 +5,18 @@ var CommentForm = React.createClass({
         var text = React.findDOMNode(this.refs.text).value.trim();
         this.props.onCommentSubmit({text: text});
     },
+    handleReset: function(e) {
+        e.preventDefault();
+        this.props.onCommentSubmit({text: ''});
+    },
     render: function() {
         return (
             <form className="commentForm" onSubmit={this.handleSubmit}>
             <input type="text" placeholder="search data" ref="text" />
             <input type="submit" className="btn btn-sm btn-primary" value="search" />
+            <button type="button" className="btn btn-success" onClick={this.handleReset}>
+            <span className="glyphicon glyphicon-th-list"></span>
+            </button>
             <label className="pull-right">資料來源:
             <a href="http://www.gov.taipei/ct.asp?xItem=108880666&ctNode=38161&mp=100001">台北市資訊局</a>
             </label>
@@ -56,7 +63,7 @@ var test;
 var trInfoClass;
 var CommentList = React.createClass({
     handleClick: function(id) {
-        var filter = this.props.filter = id;
+        this.props.filter = id;
         this.forceUpdate();
     },
     filterData: function(data, filter) {
